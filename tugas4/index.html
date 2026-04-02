@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konstruktor dan Enkapsulasi dalam Pemrograman Dart</title>
+
+<style>
+body{
+  margin:0;
+  padding:40px;
+  background:#0f0f14;
+  font-family:Arial, sans-serif;
+  color:white;
+}
+
+h1{
+  text-align:center;
+  color:#ff4da6;
+}
+
+  .identitas{
+  text-align:center;
+  color:#ff99cc;
+  margin-bottom:30px;
+  line-height:1.8;
+}
+
+.section{
+  border:2px solid #ff4da6;
+  padding:25px;
+  margin-bottom:40px;
+  border-radius:12px;
+  background:#1a1a22;
+}
+
+.preview-box{
+  background:black;
+  padding:20px;
+  border-radius:10px;
+  margin-top:15px;
+  color:#00ff88;
+  font-family:monospace;
+  overflow-x:auto;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.btn-run{
+  background:#ff4da6;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.btn-run:hover{
+  background:#ff1a8c;
+}
+
+/* POPUP */
+.popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-box{
+  width:95%;
+  height:85vh;
+  max-width:1000px;
+  background:#1a1a22;
+  padding:20px;
+  border-radius:10px;
+  position:relative;
+  border:2px solid #ff4da6;
+}
+
+#dartFrame{
+width:100%;
+height:100%;
+border:none;
+}
+  
+.close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:22px;
+  cursor:pointer;
+  color:#ff4da6;
+}
+
+iframe{
+  width:100%;
+  height:520px;
+  border:none;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Polimorfisme dan Abstraksi</h1>
+
+<div class="identitas">
+Nama: Putri Ananda Amelia <br>
+NIM: 251410029 <br>
+Kelas: SI2A
+</div>
+
+<div class="section">
+<h2>Penjelasan Polimorfisme dan Abstraksi</h2>
+<p>
+Polimorfisme adalah konsep dalam pemrograman berorientasi objek di mana satu tipe atau satu method dapat memiliki banyak bentuk atau perilaku. Artinya, objek yang berbeda bisa merespons method yang sama dengan cara yang berbeda, tergantung dari class masing-masing.
+Abstraksi adalah konsep menyederhanakan sistem dengan menyembunyikan detail implementasi dan hanya menampilkan bagian pentingnya saja. Dengan abstraksi, kita fokus pada apa yang dilakukan suatu objek, bukan bagaimana cara kerjanya.
+</div>
+
+<div class="section">
+<h2>Pewarisan</h2>
+<p>
+Inheritance adalah konsep dimana class dapat mewarisi sifat dan method dari class lain menggunakan extends. Method dari parent bisa digunakan kembali atau diubah dengan @override, dan constructor parent dapat dipanggil menggunakan super().
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Hewan {
+  void bersuara() => print('...');
+}
+
+class Sapi extends Hewan {
+  @override
+  void bersuara() => print('Moo');
+}
+
+void main() {
+  Sapi s = Sapi();
+  s.bersuara();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('0d3dad36e1fac9b243fcad25da7ac2f9')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Pengantar Polimorfisme</h2>
+<p>
+Polimorfisme berarti satu objek memiliki banyak bentuk. Objek dari subclass bisa diperlakukan sebagai superclass, tetapi tetap menjalankan perilaku sesuai dengan class aslinya. Dalam Dart, polimorfisme terjadi saat runtime melalui method overriding.
+</p>
+</div>
+
+<div class="section">
+<h2>Polimorfisme dengan Inheritance</h2>
+<p>
+Satu variabel parent bisa menyimpan berbagai object child.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Bentuk {
+  void gambar() => print('Menggambar bentuk');
+}
+
+class Segitiga extends Bentuk {
+  @override
+  void gambar() => print('Menggambar Segitiga');
+}
+
+class PersegiPanjang extends Bentuk {
+  @override
+  void gambar() => print('Menggambar Persegi Panjang');
+}
+
+void main() {
+  Bentuk b1 = Segitiga ();
+  Bentuk b2 = PersegiPanjang();
+
+  b1.gambar();
+  b2.gambar();
+}
+</pre>
+</div>
+  
+<button class="btn-run" onclick="openPopup('fa5bf2c69313db5d2f418f839002c323')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Manfaat Polimorfisme</h2>
+<p>
+Polimorfisme membuat kode lebih fleksibel, mudah dikembangkan, dapat digunakan kembali, dan lebih mudah dalam perawatan.
+</p>
+</div>
+
+<div class="section">
+<h2>is dan as Operator</h2>
+<p>
+Operator is digunakan untuk mengecek tipe objek, sedangkan as digunakan untuk melakukan casting tipe objek agar dapat mengakses method tertentu dengan aman.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+class Kendaraan {}
+class Bus extends Kendaraan {
+  void klakson() {
+    print('Telolet!');
+  }
+}
+
+void main() {
+  Bus k = Bus(); 
+  k.klakson();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('dfb31e6e2b04564a2b9d219ca8dafc3c')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Praktik 1: Polimorfisme dengan List</h2>
+<p>
+Satu list bertipe parent dapat berisi berbagai objek subclass. Saat dilakukan perulangan, setiap objek tetap menjalankan method sesuai implementasinya masing-masing.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+class Hewan {
+  void bersuara() => print('Hewan...');
+}
+
+class Kucing extends Hewan {
+  @override
+  void bersuara() => print('Meong');
+}
+
+class Anjing extends Hewan {
+  @override
+  void bersuara() => print('Guk guk');
+}
+
+class Burung extends Hewan {
+  @override
+  void bersuara() => print('Cuit cuit');
+}
+
+void main() {
+  List<Hewan> daftarHewan = [
+    Kucing(),
+    Anjing(),
+    Burung(),
+  ];
+
+  for (var h in daftarHewan) {
+    h.bersuara();
+  }
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('72a95e3cafbea3fbba43732fa94d3e90')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Pengantar Abstraksi</h2>
+<p>
+Abstraksi adalah konsep menyembunyikan detail implementasi dan hanya menampilkan fungsi utama. Tujuannya agar fokus pada apa yang dilakukan sistem, bukan bagaimana cara kerjanya
+</p>
+</div>
+
+<div class="section">
+<h2>Abstract Class</h2>
+<p>
+Abstract class adalah class yang tidak bisa diinstansiasi secara langsung. Class ini dapat memiliki method abstract (tanpa isi) dan method biasa (dengan isi) sebagai dasar bagi subclass.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+abstract class Kendaraan {
+  String? merk;
+
+  void start();
+
+  void stop() {
+    print('Kendaraan berhenti');
+  }
+}
+
+class Motor extends Kendaraan {
+  @override
+  void start() {
+    print('Motor $merk menyala');
+  }
+}
+
+void main() {
+  Motor m = Motor();
+  m.merk = "Yamaha";
+  m.start();
+  m.stop();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('9c9351694cd5c1005b20d2aac5c71b2c')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Abstract Method</h2>
+<p>
+Abstract method adalah method tanpa isi yang wajib diimplementasikan oleh subclass. Hal ini memastikan setiap subclass memiliki fungsi tertentu sesuai aturan.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+abstract class AlatMusik {
+  void mainkan();
+
+  void info() {
+    print('Ini adalah alat musik');
+  }
+}
+
+class Biola extends AlatMusik {
+  @override
+  void mainkan() {
+    print('Ngeeeng... ngeeeng...');
+  }
+}
+
+void main() {
+  Biola g = Biola();
+  g.info();
+  g.mainkan();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('2526a1b58c0e3c4d98dac1a9ec6c3377')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Interface di Dart</h2>
+<p>
+Interface adalah kontrak yang harus diikuti oleh class. Dalam Dart, interface digunakan dengan keyword implements, dan semua method harus diimplementasikan.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+abstract class Flyable {
+  void terbang();
+}
+
+class Roket implements Flyable {
+  @override
+  void terbang() => print('Roket meluncur ke angkasa');
+}
+
+class BalonUdara implements Flyable {
+  @override
+  void terbang() => print('Balon udara melayang di langit');
+}
+
+void main() {
+  Roket b = Roket();
+  BalonUdara p = BalonUdara();
+
+  b.terbang();
+  p.terbang();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('5b8ca02c5a4887e365a79e9ed82ed565')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Perbedaan extends vs implements</h2>
+<p>
+extends digunakan untuk pewarisan (is-a), sedangkan implements digunakan untuk menerapkan kontrak (can-do). extends hanya satu parent, sementara implements bisa lebih dari satu
+</div>
+
+<div class="section">
+<h2>Static Members dan Method</h2>
+<p>
+Static adalah property atau method yang dimiliki oleh class, bukan objek. Static dapat diakses langsung tanpa membuat instance, biasanya digunakan untuk fungsi umum
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+class MathUtils {
+  static double pi = 3.14;
+
+  static int add(int x, int y) {
+    return x + y;
+  }
+}
+
+void main() {
+  print('Nilai Pi: ${MathUtils.pi}');
+  print('Result: ${MathUtils.add(12, 18)}');
+}    
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('25fdc0dbe02661702842fe50e0161248')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Praktik 2: Sistem Pembayaran</h2>
+<p>
+Konsep polimorfisme diterapkan pada sistem pembayaran seperti kartu kredit, e-wallet, dan tunai, dimana setiap metode memiliki implementasi method bayar() yang berbeda
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+abstract class MetodePembayaran {
+  void bayar(double jumlah);
+}
+
+class QRIS implements MetodePembayaran {
+  @override
+  void bayar(double jumlah) {
+    print('Bayar $jumlah dengan QRIS');
+  }
+}
+
+class TransferBank implements MetodePembayaran {
+  @override
+  void bayar(double jumlah) {
+    print('Bayar $jumlah dengan Transfer Bank');
+  }
+}
+
+class PayLater implements MetodePembayaran {
+  @override
+  void bayar(double jumlah) {
+    print('Bayar $jumlah dengan PayLater');
+  }
+}
+
+void main() {
+  MetodePembayaran m1 = QRIS();
+  MetodePembayaran m2 = TransferBank();
+  MetodePembayaran m3 = PayLater();
+
+  m1.bayar(55000);
+  m2.bayar(70000);
+  m3.bayar(95000);
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('6f0b4bd197657578bcdffee9e321dea2')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Studi Kasus: Sistem Bentuk Geometri</h2>
+<p>
+Class parent digunakan sebagai dasar untuk berbagai bentuk seperti segitiga dan persegi panjang. Setiap bentuk memiliki cara perhitungan luas dan keliling yang berbeda.
+</p>
+ 
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+abstract class Bentuk {
+  double hitungLuas();
+  double hitungKeliling();
+
+  void info() {
+    print('Luas: ${hitungLuas()}, Keliling: ${hitungKeliling()}');
+  }
+}
+
+class Segitiga extends Bentuk {
+  double alas, tinggi, sisiMiring;
+
+  Segitiga(this.alas, this.tinggi, this.sisiMiring);
+
+  @override
+  double hitungLuas() => 0.5 * alas * tinggi;
+
+  @override
+  double hitungKeliling() => alas + tinggi + sisiMiring;
+}
+
+class PersegiPanjang extends Bentuk {
+  double panjang, lebar;
+
+  PersegiPanjang(this.panjang, this.lebar);
+
+  @override
+  double hitungLuas() => panjang * lebar;
+
+  @override
+  double hitungKeliling() => 2 * (panjang + lebar);
+}
+
+void main() {
+  Bentuk b1 = Segitiga(4, 6, 5);
+  Bentuk b2 = PersegiPanjang(5, 3);
+
+  b1.info();
+  b2.info();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('bc20888464ed695fc8beb31a8b61072d')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Kesimpulan</h2>
+<p>
+polimorfisme dan abstraksi adalah konsep penting dalam pemrograman berorientasi objek yang membantu membuat program lebih terstruktur dan efisien. Polimorfisme memungkinkan satu bentuk memiliki banyak perilaku sehingga program menjadi lebih fleksibel, sedangkan abstraksi menyederhanakan sistem dengan menyembunyikan detail yang tidak perlu dan menampilkan fungsi utama saja. Keduanya membuat kode lebih mudah dikembangkan, digunakan kembali, dan dirawat.
+</p>
+</div>
+
+<div class="section">
+<h2>Bonus 1: Class Pekerja</h2>
+<p>
+Latihan ini menggabungkan inheritance, polimorfisme, dan pengecekan tipe. Class child mewarisi dan mengoverride method dari parent, lalu satu variabel parent bisa menampung berbagai object child dengan perilaku berbeda. Operator is dan as digunakan untuk memastikan tipe object agar penggunaan method lebih aman.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+abstract class Pekerja {
+  void bekerja();
+}
+
+class Programmer extends Pekerja {
+  @override
+  void bekerja() {
+    print("Programmer sedang coding");
+  }
+}
+
+class Dokter extends Pekerja {
+  @override
+  void bekerja() {
+    print("Dokter sedang mengobati pasien");
+  }
+}
+
+class Guru extends Pekerja {
+  @override
+  void bekerja() {
+    print("Guru sedang mengajar");
+  }
+}
+
+void main() {
+  List<Pekerja> pekerjaList = [
+    Programmer(),
+    Dokter(),
+    Guru(),
+  ];
+
+  for (var pekerja in pekerjaList) {
+    pekerja.bekerja();
+  }
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('ece9fc4e712f639e38e539ec4646576b')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Bonus 2: Class Tablet</h2>
+<p>
+Menggunakan list untuk menyimpan beberapa object dari subclass yang berbeda. Saat dilakukan perulangan, setiap object tetap menjalankan method sesuai dengan class masing-masing.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Komputer {
+  void hitung() {
+    print("Komputer menghitung");
+  }
+}
+
+class Kamera {
+  void foto() {
+    print("Kamera mengambil foto");
+  }
+}
+
+class Telepon {
+  void telpon() {
+    print("Telepon menelepon");
+  }
+}
+
+class Tablet implements Komputer, Kamera, Telepon {
+  @override
+  void hitung() {
+    print("Tablet menghitung");
+  }
+
+  @override
+  void foto() {
+    print("Tablet mengambil foto");
+  }
+
+  @override
+  void telpon() {
+    print("Tablet menelepon");
+  }
+}
+
+void main() {
+  var tablet = Tablet();
+  tablet.hitung();
+  tablet.foto();
+  tablet.telpon();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('2043a032a17caa5bd9a0f50ac048bf23')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Bonus 3: Class Mathutils</h2>
+<p>
+Membuat abstract class sebagai kerangka dasar, lalu diimplementasikan oleh class turunan. Setiap subclass wajib mengisi method yang sudah ditentukan sehingga program lebih terstruktur.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+import 'dart:math';
+
+class MathUtils {
+  static int faktorial(int n) {
+    if (n <= 1) return 1;
+    return n * faktorial(n - 1);
+  }
+
+  static bool isPrima(int n) {
+    if (n <= 1) return false;
+    for (int i = 2; i <= sqrt(n); i++) {
+      if (n % i == 0) return false;
+    }
+    return true;
+  }
+
+  static double roundDouble(double value, int places) {
+    double mod = pow(10, places).toDouble();
+    return (value * mod).round() / mod;
+  }
+
+  static int randomInt(int min, int max) {
+    return min + Random().nextInt(max - min + 1);
+  }
+
+  static double randomDouble(double min, double max) {
+    return min + Random().nextDouble() * (max - min);
+  }
+
+  static double rataRata(List<double> data) {
+    return data.reduce((a, b) => a + b) / data.length;
+  }
+
+  static double median(List<double> data) {
+    data.sort();
+    int n = data.length;
+
+    if (n % 2 == 1) {
+      return data[n ~/ 2];
+    } else {
+      return (data[n ~/ 2 - 1] + data[n ~/ 2]) / 2;
+    }
+  }
+}
+
+void main() {
+  print(MathUtils.faktorial(5));
+  print(MathUtils.isPrima(7));
+  print(MathUtils.roundDouble(3.14159, 2));
+  print(MathUtils.randomInt(1, 10));
+  print(MathUtils.randomDouble(1, 5));
+  print(MathUtils.rataRata([10, 20, 30]));
+  print(MathUtils.median([10, 20, 30, 40]));
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('0fa4d844815b4d9701a3a202da387fed')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Challenge</h2>
+<p>
+Membuat sistem Media Player dengan abstract class dan interface. Class seperti AudioPlayer dan VideoPlayer mengimplementasikan method yang sama dengan perilaku berbeda. Ini melatih abstraksi dan polimorfisme dalam satu program.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+abstract class MediaPlayer {
+  void open();
+}
+
+abstract class Playable {
+  void play();
+}
+
+abstract class Pausable {
+  void pause();
+}
+
+class AudioPlayer extends MediaPlayer implements Playable, Pausable {
+  @override
+  void open() {
+    print("Audio dibuka");
+  }
+
+  @override
+  void play() {
+    print("Audio diputar");
+  }
+
+  @override
+  void pause() {
+    print("Audio dijeda");
+  }
+}
+
+class VideoPlayer extends MediaPlayer implements Playable, Pausable {
+  @override
+  void open() {
+    print("Video dibuka");
+  }
+
+  @override
+  void play() {
+    print("Video diputar");
+  }
+
+  @override
+  void pause() {
+    print("Video dijeda");
+  }
+}
+
+void main() {
+  AudioPlayer audio = AudioPlayer();
+  audio.open();
+  audio.play();
+  audio.pause();
+
+  print("");
+
+  VideoPlayer video = VideoPlayer();
+  video.open();
+  video.play();
+  video.pause();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('890bc6c682dc6442d877dc9c0bb87145')">
+Run di DartPad
+</button>
+</div>
+
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <span class="close" onclick="closePopup()">❌</span>
+    <iframe id="dartFrame"></iframe>
+  </div>
+</div>
+
+<script>
+function openPopup(id){
+  document.getElementById("dartFrame").src =
+  "https://dartpad.dev/embed-dart.html?id=" + id + "&run=true&split=60";
+  document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+  document.getElementById("dartFrame").src="";
+}
+</script>
+
+</body>
+</html>
