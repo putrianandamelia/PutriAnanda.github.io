@@ -110,6 +110,25 @@ iframe{
   max-height:80vh;
   object-fit:contain;
 }
+/* KHUSUS POPUP GAMBAR */
+.image-box{
+  width:auto;
+  max-width:90%;
+  max-height:90%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* KHUSUS GAMBAR */
+.image-box img{
+  max-width:100%;
+  max-height:80vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:8px;
+}
 </style>
 </head>
 
@@ -649,7 +668,7 @@ Klik Lihat Output
 </div>
 
 <div class="popup" id="imagePopup">
-  <div class="popup-box">
+  <div class="popup-box image-box">
     <span class="close" onclick="closeImagePopup()">❌</span>
     <img id="popupImg">
   </div>
