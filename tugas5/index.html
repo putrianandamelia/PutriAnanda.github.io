@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -569,18 +570,14 @@ Final class cocok untuk utility class yang tidak boleh diturunkan atau diimpleme
 
 
 <div class="section">
-<h2>Bonus</h2>
-<p>
-Membuat base class untuk Repository dengan method CRUD dan
-Membuat final class untuk MathUtils dengan static methods.
-</p>
+<h2>Bonus: Base Class Repository (CRUD)</h2>
 
 <div class="preview-box">
 <pre>
 // Nama  : Putri Ananda Amelia
 // NIM   : 251410029
 // Kelas : SI2A
-  
+
 base class Repository {
   void create(String data) {
     print("Create data: $data");
@@ -621,8 +618,34 @@ base class UserRepository extends Repository {
   }
 }
 
+void main() {
+  var repo = UserRepository();
+
+  repo.create("Putri");
+  repo.read();
+  repo.update("Putri Updated");
+  repo.delete("Putri");
+}
+
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('pict4.png')">
+Klik Lihat Output
+</button>
+</div>
+
+
+<div class="section">
+<h2>Bonus: Final Class MathUtils (Static Methods)</h2>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
 final class MathUtils {
- 
   static int tambah(int a, int b) {
     return a + b;
   }
@@ -641,16 +664,6 @@ final class MathUtils {
 }
 
 void main() {
- 
-  print("=== Repository ===");
-  var repo = UserRepository();
-
-  repo.create("Putri");
-  repo.read();
-  repo.update("Putri Updated");
-  repo.delete("Putri");
-
-  print("\n=== MathUtils ===");
   print("Tambah: ${MathUtils.tambah(10, 5)}");
   print("Kurang: ${MathUtils.kurang(10, 5)}");
   print("Kali: ${MathUtils.kali(10, 5)}");
@@ -659,7 +672,7 @@ void main() {
 </pre>
 </div>
 
-<button class="btn-run" onclick="openImagePopup('program4.png')">
+<button class="btn-run" onclick="openImagePopup('pict5.png')">
 Klik Lihat Output
 </button>
 </div>
