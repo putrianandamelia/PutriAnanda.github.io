@@ -1,29 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multiple Inheritance & Class Modifiers</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
+
 body{
   margin:0;
   padding:40px;
   background:#0f0f14;
-  font-family:Arial, sans-serif;
+  font-family:'Poppins', sans-serif;
   color:white;
 }
 
 h1{
   text-align:center;
   color:#ff4da6;
+  font-family: 'Dancing Script', sans-serif;
 }
 
-  .identitas{
-  text-align:center;
+.identitas{
+  display: flex;
+  justify-content: center;
+  gap: 30px;
   color:#ff99cc;
   margin-bottom:30px;
-  line-height:1.8;
+}
+
+.identitas p{
+  margin: 0;
 }
 
 .section{
@@ -136,22 +144,23 @@ iframe{
 
 <h1>Multiple Inheritance & Class Modifiers</h1>
 <div class="identitas">
-Nama: Putri Ananda Amelia <br>
-NIM: 251410029 <br>
-Kelas: SI2A
+<p>Nama: Putri Ananda Amelia</p>
+<p>NIM: 251410029</p>
+<p>Kelas: SI2A</p>
 </div>
 
 <div class="section">
 <h2>Multiple Inheritance dengan Mixin</h2>
 <p>
-Multiple inheritance: digunakan agar satu objek mewarisi perilaku/properti dari dua atau lebih class sekaligus.
+<ul>
+<li>Multiple inheritance: digunakan agar satu objek mewarisi perilaku/properti dari dua atau lebih class sekaligus.</li>
 
-Dart: pakai mixin untuk menggabungkan fungsionalitas beberapa class tanpa pewarisan rumit.
+<li>Dart: pakai mixin untuk menggabungkan fungsionalitas beberapa class tanpa pewarisan rumit.</li>
 
-Bahasa yang mendukung: C++, Python, Scala, Perl (multiple inheritance langsung), Java, C#, Kotlin (single inheritance).
+<li>Bahasa yang mendukung: C++, Python, Scala, Perl (multiple inheritance langsung), Java, C#, Kotlin (single inheritance).</li>
 
-Contoh: Bebek (berenang + terbang), Smartphone (kamera + telepon).
-
+<li>Contoh: Bebek (berenang + terbang), Smartphone (kamera + telepon).</li>
+</ul>
 </p>
 </div>
 
@@ -301,9 +310,11 @@ Run di DartPad
 <div class="section">
 <h2>Sealed Class</h2>
 <p>
-Exhaustive checking: Compiler tahu semua kemungkinan subclass,
-Pattern matching: Switch case yang aman,
-Documentation: Jelas hierarki terbatas.
+<ul>
+<li>Mendeklarasikan sealed class ApiResponse</li>
+<li>Menentukan turunan: Succes dan Error</li>
+<li>Berfungsi sebagai library (dasar class)</li>
+</ul>
 </p>
   
 <div class="preview-box">
@@ -312,45 +323,65 @@ Documentation: Jelas hierarki terbatas.
 // NIM   : 251410029
 // Kelas : SI2A
 
-sealed class PaymentResponse {}
+//libsealed.dart
+sealed class ApiResponse {}
 
-class PaymentSuccess extends PaymentResponse {
+class Success extends ApiResponse {
   final String message;
-  PaymentSuccess(this.message);
+  Success(this.message);
 }
 
-class PaymentError extends PaymentResponse {
+class Error extends ApiResponse {
   final String errorMessage;
-  PaymentError(this.errorMessage);
-}
-
-void handleResponse(PaymentResponse response) {
-  if (response is PaymentSuccess) {
-    print("Payment Success: ${response.message}");
-  } else if (response is PaymentError) {
-    print("Payment Error: ${response.errorMessage}");
-  }
-}
-
-void main() {
-  handleResponse(PaymentSuccess("Pembayaran berhasil"));
-  handleResponse(PaymentError("Saldo tidak cukup"));
+  Error(this.errorMessage);
 }
 </pre>
 </div>
 
-<button class="btn-run" onclick="openImagePopup('pict1.png')">
-Klik Lihat Capture
+<p>
+<ul>
+<li>Menggunakan class dari libsealed.dart</li>
+<li>Menampilkan hasil Succes dan Error</li>
+<li>Di gunakan untuk menguji sealed class</li>
+</ul>
+</p>
+
+ <div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+import 'libsealed.dart';
+
+void handleResponse(ApiResponse response) {
+  if (response is Success) {
+    print("Success: ${response.message}");
+  } else if (response is Error) {
+    print("Error: ${response.errorMessage}");
+  }
+}
+
+void main() {
+  handleResponse(Success("Data berhasil"));
+  handleResponse(Error("Terjadi kesalahan"));
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('gambar1.png')">
+Klik Lihat Output
 </button>
 </div>
 
 <div class="section">
 <h2>Base Class</h2>
 <p>
-Bisa di-extend, tapi tidak bisa di-implement
-Memastikan pewarisan dengan extends , bukan implements
-Berguna untuk library yang ingin mengontrol inheritance
-Saat ingin membuat hierarki yang hanya boleh di-extend.
+<ul>
+<li>Mendeklarasikan base class Animal</li>
+<li>Mengatur bahwa hanya boleh extends</li>
+<li>Berfungsi sebagai dasar pewarisan</li>
+</ul>
 </p>
 
 <div class="preview-box">
@@ -359,11 +390,25 @@ Saat ingin membuat hierarki yang hanya boleh di-extend.
 // NIM   : 251410029
 // Kelas : SI2A
 
+//libbase.dart
 base class Animal {
-  void speak() {
-    print("Animal makes a sound");
-  }
+  void speak() {}
 }
+</pre>
+</div>
+
+<ul>
+<li>Merupakan class turunan</li>
+<li>Menggunakan extends Animal</li>
+</ul>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+import 'libbase.dart';
 
 base class Cow extends Animal {
   @override
@@ -375,33 +420,35 @@ base class Cow extends Animal {
 base class Lion extends Animal {
   @override
   void speak() {
-    print("Roar!");
+    print("Roarr!");
   }
 }
 
 void main() {
-  Animal animal;
+  Animal cow = Cow();
+  cow.speak();
 
-  animal = Cow();
-  animal.speak(); 
-
-  animal = Lion();
-  animal.speak(); 
+  Animal lion = Lion();
+  lion.speak();
 }
 </pre>
 </div>
 
-<button class="btn-run" onclick="openImagePopup('pict2.png')">
-Klik Lihat Capture
+
+<button class="btn-run" onclick="openImagePopup('gambar2.png')">
+Klik Lihat Output
 </button>
 </div>
 
 <div class="section">
 <h2>Final Class</h2>
 <p>
-Tidak bisa di-extend atau di-implement dari luar library, 
-Tapi bisa di-extend/implement di dalam library yang sama,
-Berguna untuk class yang ingin "ditutup" untuk modifikasi.
+<ul>
+<li>Mendeklarasikan final class Settings</li>
+<li>Tidak bisa di-extend atau di-implement dari luar library
+    Tapi bisa di-extend/implement di dalam library yang sama </li>
+<li>Berguna untuk class yang ingin "ditutup" untuk modifikasi.</li>
+</ul>
 </p>
   
 <div class="preview-box">
@@ -410,6 +457,7 @@ Berguna untuk class yang ingin "ditutup" untuk modifikasi.
 // NIM   : 251410029
 // Kelas : SI2A
 
+//libfinal.dart
 final class Settings {
   final String theme;
   final int fontSize;
@@ -421,15 +469,39 @@ final class Settings {
   }
 }
 
-void main() {
-  Settings settings = Settings(theme: "Light", fontSize: 16);
-  settings.showSettings();
+base class CustomSettings extends Settings {
+  CustomSettings(String theme, int fontSize)
+      : super(theme: theme, fontSize: fontSize);
 }
 </pre>
 </div>
 
-<button class="btn-run" onclick="openImagePopup('pict3.png')">
-Klik Lihat Capture
+<ul>
+<li>Membuat object dari Settings</li>
+<li>Di gunakan untuk menguji final class</li>
+</ul>
+
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+import 'libfinal.dart';
+
+void main() {
+  Settings settings = Settings(theme: "Dark", fontSize: 16);
+  settings.showSettings();
+
+  CustomSettings custom = CustomSettings("Dark", 16);
+  custom.showSettings();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('gambar3.png')">
+Klik Lihat Output
 </button>
 </div>
 
@@ -570,6 +642,12 @@ Final class cocok untuk utility class yang tidak boleh diturunkan atau diimpleme
 
 <div class="section">
 <h2>Bonus: Base Class Repository (CRUD)</h2>
+<p>
+<ul>
+<li>Berisi method CRUD (create, read, update, delete)</li>
+<li>Menggunakan base</li>
+</ul>
+</p>
 
 <div class="preview-box">
 <pre>
@@ -577,6 +655,7 @@ Final class cocok untuk utility class yang tidak boleh diturunkan atau diimpleme
 // NIM   : 251410029
 // Kelas : SI2A
 
+// repository.dart
 base class Repository {
   void create(String data) {
     print("Create data: $data");
@@ -594,49 +673,16 @@ base class Repository {
     print("Delete data: $data");
   }
 }
-
-base class UserRepository extends Repository {
-  @override
-  void create(String data) {
-    print("User created: $data");
-  }
-
-  @override
-  void read() {
-    print("Read all users");
-  }
-
-  @override
-  void update(String data) {
-    print("User updated: $data");
-  }
-
-  @override
-  void delete(String data) {
-    print("User deleted: $data");
-  }
-}
-
-void main() {
-  var repo = UserRepository();
-
-  repo.create("Putri");
-  repo.read();
-  repo.update("Putri Updated");
-  repo.delete("Putri");
-}
-
 </pre>
 </div>
 
-<button class="btn-run" onclick="openImagePopup('pict4.png')">
-Klik Lihat Capture
-</button>
-</div>
-
-
-<div class="section">
-<h2>Bonus: Final Class MathUtils (Static Methods)</h2>
+<p>
+<ul>
+<li>UserRepository turunan dari Repository (extends)</li>
+<li>Override method create</li>
+<li>main() untuk menjalankan program</li>
+</ul>
+</p>
 
 <div class="preview-box">
 <pre>
@@ -644,6 +690,50 @@ Klik Lihat Capture
 // NIM   : 251410029
 // Kelas : SI2A
 
+import 'repository.dart';
+
+base class UserRepository extends Repository {
+  @override
+  void create(String data) {
+    print("User created: $data");
+  }
+}
+
+void main() {
+  var repo = UserRepository();
+  repo.create("Putri Ananda");
+  repo.read();
+  repo.update("Data Baru");
+  repo.delete("Data Lama");
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('gambar4.png')">
+Klik Lihat Output
+</button>
+</div>
+
+
+<div class="section">
+<h2>Bonus: Final Class MathUtils (Static Methods)</h2>
+
+<p>
+<ul>
+<li>Menggunakan final</li>
+<li>Tidak bisa diwariskan</li>
+<li>Berisi operasi matematika (tambah,kurang,kali,bagi)</li>
+</ul>
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+
+// math_utils.dart
 final class MathUtils {
   static int tambah(int a, int b) {
     return a + b;
@@ -661,18 +751,35 @@ final class MathUtils {
     return a / b;
   }
 }
+</pre>
+</div>
+
+<p>
+<ul>
+<li>Menjalankan method dari MathUtils</li>
+<li>Tidak perlu membuat objek</li>
+</ul>
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+import 'math_utils.dart';
 
 void main() {
-  print("Tambah: ${MathUtils.tambah(10, 5)}");
-  print("Kurang: ${MathUtils.kurang(10, 5)}");
-  print("Kali: ${MathUtils.kali(10, 5)}");
-  print("Bagi: ${MathUtils.bagi(10, 5)}");
+  print(MathUtils.tambah(10, 5));
+  print(MathUtils.kurang(10, 5));
+  print(MathUtils.kali(10, 5));
+  print(MathUtils.bagi(10, 5));
 }
 </pre>
 </div>
 
-<button class="btn-run" onclick="openImagePopup('pict5.png')">
-Klik Lihat Capture
+<button class="btn-run" onclick="openImagePopup('gambar5.png')">
+Klik Lihat Output
 </button>
 </div>
 
