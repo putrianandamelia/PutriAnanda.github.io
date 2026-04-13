@@ -136,6 +136,7 @@ iframe{
   object-fit:contain;
   border-radius:8px;
 }
+
 </style>
 </head>
 
@@ -165,6 +166,7 @@ Kelas: SI2A
 
 <div class="section">
 <h2>Studi Kasus: Burung dan Bebek</h2>
+<p>Mixin digunakan untuk menggabungkan beberapa kemampuan (tanpa inheritance yang rumit).</p>
 <div class="preview-box">
 <pre>
 // Nama  : Putri Ananda Amelia
@@ -205,6 +207,7 @@ Run di DartPad
 
 <div class="section">
 <h2>Studi Kasus: mixin dengan state</h2>
+<p>Mixin juga bisa punya state (variabel) untuk menyimpan kondisi.</p>
   <div class="preview-box">
 <pre>
 // Nama  : Putri Ananda Amelia
@@ -308,13 +311,7 @@ Run di DartPad
 
 <div class="section">
 <h2>Sealed Class</h2>
-<p>
-<ul>
-<li>Mendeklarasikan sealed class ApiResponse</li>
-<li>Menentukan turunan: Succes dan Error</li>
-<li>Berfungsi sebagai library (dasar class)</li>
-</ul>
-</p>
+<p>Sealed class membatasi subclass hanya di file/library yang sama.</p>
   
 <div class="preview-box">
 <pre>
@@ -336,16 +333,13 @@ class Error extends ApiResponse {
 }
 </pre>
 </div>
+</div>
 
-<p>
-<ul>
-<li>Menggunakan class dari libsealed.dart</li>
-<li>Menampilkan hasil Succes dan Error</li>
-<li>Di gunakan untuk menguji sealed class</li>
-</ul>
-</p>
+<div class="section">
+<h2>Penggunaan Sealed Class</h2>
+<p>Digunakan untuk kontrol tipe dan pengecekan kondisi dengan aman.</p>
 
- <div class="preview-box">
+<div class="preview-box">
 <pre>
 // Nama  : Putri Ananda Amelia
 // NIM   : 251410029
@@ -373,15 +367,10 @@ Klik Lihat Output
 </button>
 </div>
 
+
 <div class="section">
 <h2>Base Class</h2>
-<p>
-<ul>
-<li>Mendeklarasikan base class Animal</li>
-<li>Mengatur bahwa hanya boleh extends</li>
-<li>Berfungsi sebagai dasar pewarisan</li>
-</ul>
-</p>
+<p>Base class hanya boleh diwarisi (extends), tidak bisa di-implements.</p>
 
 <div class="preview-box">
 <pre>
@@ -395,11 +384,11 @@ base class Animal {
 }
 </pre>
 </div>
+</div>
 
-<ul>
-<li>Merupakan class turunan</li>
-<li>Menggunakan extends Animal</li>
-</ul>
+<div class="section">
+<h2>Pengggunaan Base Class</h2>
+<p>Subclass harus pakai extends, bukan implements.</p>
 
 <div class="preview-box">
 <pre>
@@ -441,14 +430,7 @@ Klik Lihat Output
 
 <div class="section">
 <h2>Final Class</h2>
-<p>
-<ul>
-<li>Mendeklarasikan final class Settings</li>
-<li>Tidak bisa di-extend atau di-implement dari luar library
-    Tapi bisa di-extend/implement di dalam library yang sama </li>
-<li>Berguna untuk class yang ingin "ditutup" untuk modifikasi.</li>
-</ul>
-</p>
+<p>Final class tidak bisa diwarisi dari luar file</p>
   
 <div class="preview-box">
 <pre>
@@ -474,11 +456,11 @@ base class CustomSettings extends Settings {
 }
 </pre>
 </div>
+</div>
 
-<ul>
-<li>Membuat object dari Settings</li>
-<li>Di gunakan untuk menguji final class</li>
-</ul>
+<div class="section">
+<h2>Penggunaan Final Class</h2>
+<p>Class final hanya bisa dipakai langsung, tidak bisa dibuat turunan di luar.</p>
 
 
 <div class="preview-box">
@@ -520,6 +502,7 @@ Klik Lihat Output
 
 <div class="section">
 <h2>Praktik 1 : Sealed Class dengan Pattern Matching</h2>
+<p>Memudahkan pengecekan kondisi dengan switch yang aman.</p>
   
 <div class="preview-box">
 <pre>
@@ -577,7 +560,7 @@ Run di DartPad
 
 <div class="section">
 <h2>Studi Kasus : Sistem State Management</h2>
-
+<p>Digunakan untuk mengatur state aplikasi secara aman.</p>
 <div class="preview-box">
 <pre>
 // Nama  : Putri Ananda Amelia
@@ -735,7 +718,7 @@ Klik Lihat Output
 <ul>
 <li>Menggunakan final</li>
 <li>Tidak bisa diwariskan</li>
-<li>Berisi operasi matematika</li>
+<li>Berisi operasi matematika (tambah,kurang,kali,bagi)</li>
 </ul>
 </p>
 
