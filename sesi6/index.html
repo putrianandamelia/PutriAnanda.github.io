@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generic Dasar</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:40px;
+  background:#0f0f14;
+  font-family:'Poppins', sans-serif;
+  color:white;
+  overflow-x:hidden;
+}
+
+h1{
+  text-align:center;
+  color:#ff4da6;
+  font-family: 'Dancing Script', sans-serif;
+}
+
+.identitas{
+  text-align: center;
+  margin-bottom:30px;
+  color:#ff99cc;
+  line-height:1.8;
+}
+
+.section{
+  border:2px solid #ff4da6;
+  padding:25px;
+  margin-bottom:40px;
+  border-radius:12px;
+  background:#1a1a22;
+}
+
+.preview-box{
+  background:black;
+  padding:20px;
+  border-radius:10px;
+  margin-top:15px;
+  color:#00ff88;
+  font-family:monospace;
+  overflow-x:auto;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.btn-run{
+  background:#ff4da6;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.btn-run:hover{
+  background:#ff1a8c;
+}
+
+/* POPUP */
+.popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-box{
+  width:95%;
+  height:85vh;
+  max-width:1000px;
+  background:#1a1a22;
+  padding:20px;
+  border-radius:10px;
+  position:relative;
+  border:2px solid #ff4da6;
+}
+
+#dartFrame{
+width:100%;
+height:100%;
+border:none;
+}
+  
+.close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:22px;
+  cursor:pointer;
+  color:#ff4da6;
+}
+
+iframe{
+  width:100%;
+  height:520px;
+  border:none;
+  margin-top:20px;
+}
+
+#popupImg{
+  width:100%;
+  max-height:80vh;
+  object-fit:contain;
+}
+/* KHUSUS POPUP GAMBAR */
+.image-box{
+  width:auto;
+  max-width:90%;
+  max-height:90%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* KHUSUS GAMBAR */
+.image-box img{
+  max-width:100%;
+  max-height:60vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:8px;
+}
+.judul-success {
+  color: #ffd700; /* kuning */
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.judul-error {
+  color: #ff0000; /* merah */
+  font-size: 18px;
+  margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Generic Dasar</h1>
+<div class="identitas">
+Nama: Putri Ananda Amelia<br>
+NIM: 251410029<br>
+Kelas: SI2A
+</div>
+
+<div class="section">
+<h2>Pengantar Generic</h2>
+<p> Generic adalah fitur dalam pemrograman yang memungkinkan suatu kode digunakan untuk berbagai tipe data tanpa harus menuliskan ulang kode yang sama.
+<ul>
+<li>Tidak perlu membuat kode berulang.</li>
+<li>Tipe data lebih terkontrol.</li>
+<li>Error bisa dicegah lebih awal.</li>
+</ul>
+</p>
+</div>
+
+<div class="section">
+<h2>Masalah Tanpa Generic</h2>
+<p>Pada slide ini digunakan dynamic, sehingga data bisa berisi tipe apa saja tanpa pengecekan.</p>
+<h3 class="judul-success">✔ Success</h3>
+<ul>
+<li>Data yang disimpan memang bertipe int</li>
+</ul>
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Box {
+  dynamic data;
+
+  Box(this.data);
+}
+
+void main() {
+  var box = Box(42);
+  int value = box.data; // Runtime error jika bukan int
+// Tidak aman!
+
+  print(value);
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto1.png')">
+Klik Output Succes
+</button>
+
+
+<h3 class="judul-error">❌ Error</h3>
+<ul>
+<li>Data yang disimpan tidak sesuai dengan tipe yang digunakan</li>
+<li>Data ternyata String, tetapi dipaksa jadi int</li>
+</ul>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Box {
+  dynamic data;
+
+  Box(this.data);
+}
+
+void main() {
+  var box = Box("Hello"); // String
+  int value = box.data; // Runtime error
+  print(value);
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto2.png')">
+Klik Output Error
+</button>
+</div>
+
+
+<div class="section">
+<h2>Solusi Dengan Generic</h2>
+<p>Pada bagian ini digunakan generic (<T>) untuk menentukan tipe data sejak awal, sehingga data yang disimpan menjadi lebih terkontrol dan aman.</p>
+<h3 class="judul-success">✔ Success</h3>
+<ul>
+<li>Tipe data sudah ditentukan (misalnya int atau String)</li>
+</ul>
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Box<T> {
+  T data;
+
+  Box(this.data);
+}
+
+void main() {
+  var intBox = Box<int>(42);
+  var stringBox = Box<String>('Hello');
+
+  int value = intBox.data; // Aman, pasti int
+  print(value); 
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto3.png')">
+Klik Output Succes
+</button>
+
+
+<h3 class="judul-error">❌ Error</h3>
+<ul>
+<li>Memasukkan data yang tidak sesuai dengan tipe yang sudah ditentukan</li>
+</ul>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Box<T> {
+  T data;
+
+  Box(this.data);
+}
+
+void main() {
+  var stringBox = Box<String>("Hello");
+
+  stringBox.data = 123; //  ERROR  compile-time
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto4.png')">
+Klik Output Error
+</button>
+</div>
+
+<div class="section">
+<h2>Sintaks Generasi Dasar</h2>
+<p>Sintaks generic digunakan dengan tanda < > untuk menentukan parameter tipe data.</p>
+
+ <ul>
+  <li><b>T</b> : Type (umum).</li>
+  <li><b>E</b> : Element.</li>
+  <li><b>K, V</b> : Key dan Value.</li>
+  <li><b>R</b> : Return Type.</li>
+</ul>
+</div>
+
+
+<div class="section">
+<h2>Contoh Sintaks Generic pada class dan function</h2>
+<p>Pada slide ini dijelaskan penggunaan generic pada class dan function, yaitu dengan menambahkan <T> sebagai parameter tipe agar bisa digunakan untuk berbagai jenis data.</p>
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class MyClass<T> {
+  T data;
+
+  MyClass(this.data);
+
+  T getData() {
+    return data;
+  }
+}
+
+T myFunc<T>(T value) {
+  return value;
+}
+
+void main() {
+  // Class generic
+  var myIntClass = MyClass<int>(10);
+  var myStringClass = MyClass<String>('test');
+
+  print(myIntClass.getData());
+  print(myStringClass.getData());
+
+  // Fungsi generic
+  var intValue = myFunc<int>(100);
+  var stringValue = myFunc<String>('hello');
+
+  print(intValue);
+  print(stringValue);
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('941916fbb001eebe8dc935a0c3b7d841')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Contoh Kelas Box (T) </h2>
+<p>Pada slide ini ditampilkan contoh penggunaan generic dalam class Box(T), yang berfungsi untuk menyimpan satu nilai dengan tipe data yang fleksibel sesuai (T).</p>
+  <div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Box<T> {
+  T? _value;
+
+  Box(this._value);
+
+  T? get value => _value;
+
+  void setValue(T value) {
+    _value = value;
+  }
+}
+
+void main() {
+  var intBox = Box<int>(10);
+  print('Int Box Value: ${intBox.value}');
+
+  intBox.setValue(20);
+  print('Int Box Value After Set: ${intBox.value}');
+
+  var stringBox = Box<String>('Hello, Generic!');
+  print('String Box Value: ${stringBox.value}');
+
+  stringBox.setValue('Hello World');
+  print('String Box Value After Set: ${stringBox.value}');
+
+  var doubleBox = Box<double>(3.14);
+  print('Double Box Value: ${doubleBox.value}');
+}
+</pre>
+</div>
+  
+<button class="btn-run" onclick="openPopup('29bda8886c16c8089742b75f356f6916')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Multiple Type Parameters</h2>
+<p>Pada slide ini dijelaskan bahwa generic tidak hanya menggunakan satu tipe (T), tetapi juga bisa menggunakan lebih dari satu tipe, seperti (K, V).</p>
+  <div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Pair<K, V> {
+  K key;
+  V value;
+
+  Pair(this.key, this.value);
+
+  void printPair() {
+    print('Key: $key, Value: $value');
+  }
+}
+
+void main() {
+  var pair1 = Pair<String, int>('age', 20);
+  pair1.printPair();
+
+  var pair2 = Pair<String, String>('name', 'Putri');
+  pair2.printPair();
+
+  var pair3 = Pair<int, double>(1, 2.71);
+  pair3.printPair();
+}
+</pre>
+</div>
+  
+<button class="btn-run" onclick="openPopup('92aa00f366edb531cb4bcbe30dd1d998')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Menggabungkan dua nilai dengan tipe data yang berbeda.</h2>
+<p>Pada slide ini ditampilkan fungsi generic yang digunakan untuk menggabungkan dua nilai dengan tipe data yang berbeda menjadi satu output (biasanya dalam bentuk String).</p>
+  <div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+String combine<T, U>(T value1, U value2) {
+  return '$value1, $value2';
+}
+
+void main() {
+  var result1 = combine<String, int>('Number is ', 10);
+  print(result1);
+
+  var result2 = combine<int, double>(10, 20.5);
+  print(result2);
+}
+</pre>
+</div>
+  
+<button class="btn-run" onclick="openPopup('4407c2e1882a455bd88e256527e43f9d')">
+Run di DartPad
+</button>
+</div>
+
+
+<div class="section">
+<h2>Generic dengan extends</h2>
+<p>Pada slide ini dijelaskan bahwa generic bisa dibatasi menggunakan extends, sehingga hanya tipe data tertentu saja yang boleh digunakan.</p>
+<h3 class="judul-success">✔ Success</h3>
+<ul>
+<li>Tipe data yang digunakan sesuai dengan batasan (num)</li>
+</ul>
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class NumberBox<T extends num> {
+  T value;
+
+  NumberBox(this.value);
+
+  T getValue() {
+    return value;
+  }
+}
+
+void main() {
+  var intBox = NumberBox<int>(10);
+  print("int box value: ${intBox.getValue()}");
+
+  var doubleBox = NumberBox<double>(3.14);
+  print("double box value: ${doubleBox.getValue()}");
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto5.png')">
+Klik Output Succes
+</button>
+
+
+<h3 class="judul-error">❌ Error</h3>
+<ul>
+<li>Menggunakan tipe data yang tidak sesuai dengan batasan</li>
+<li>Menggunakan String, padahal hanya boleh num</li>
+</ul>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class NumberBox<T extends num> {
+  T value;
+
+  NumberBox(this.value);
+}
+
+void main() {
+  var stringBox = NumberBox<String>('test');
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto6.png')">
+Klik Output Error
+</button>
+</div>
+
+<div class="section">
+<h2>Type Inference (Inferensi Tipe)</h2>
+<p>Pada slide ini dijelaskan bahwa Dart dapat menentukan tipe data generic secara otomatis tanpa harus dituliskan secara eksplisit. Hal ini disebut type inference.</p>
+  <div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+T myFunc<T>(T value) {
+  return value;
+}
+
+void main() {
+  var intValue = myFunc(10);
+  print(intValue.runtimeType);
+
+  var stringValue = myFunc("test");
+  print(stringValue.runtimeType);
+}
+</pre>
+</div>
+  
+<button class="btn-run" onclick="openPopup('de67817d448677fd7e3c175564ae8278')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Pembatasan Tipe dan manfaatnya</h2>
+<p>Pada slide ini dijelaskan tentang manfaat penggunaan pembatasan tipe (constraints) pada generic. Dengan pembatasan tipe, kita bisa memastikan bahwa hanya tipe data tertentu yang dapat digunakan, sehingga kode menjadi lebih aman dan terstruktur.
+<ul>
+<li>Meningkatkan keamanan tipe data (mengurangi risiko error).</li>
+<li>Membuat kode lebih mudah dipahami.</li>
+<li>Memungkinkan penggunaan method tertentu dari tipe tersebut.</li>
+<li>Mencegah penggunaan tipe yang tidak sesuai.</li>
+<li>Membantu dalam perancangan kode yang lebih rapi.</li>
+</ul>
+</p>
+</div>
+
+<div class="section">
+<h2>Pembatasan Tipe pada Interface dan Class</h2>
+<p>Pada slide ini dijelaskan bahwa generic dapat dibatasi menggunakan extends pada interface atau class.</p>
+<h3 class="judul-success">✔ Success</h3>
+<ul>
+<li>Data yang digunakan sesuai dengan batasan (Iterable)</li>
+</ul>
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+void printIterable<T extends Iterable<dynamic>>(T iterable) {
+  for (var item in iterable) {
+    print(item);
+  }
+}
+
+void main() {
+  printIterable<List<int>>([1, 2, 3]);
+  printIterable<Set<String>>({'melon', 'apple'});
+
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto7.png')">
+Klik Output Succes
+</button>
+
+
+<h3 class="judul-error">❌ Error</h3>
+<ul>
+<li>Menggunakan tipe yang tidak sesuai dengan batasan</li>
+<li>Menggunakan int, padahal bukan Iterable</li>
+</ul>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+void printIterable(dynamic iterable) {
+  for (var item in iterable) {
+    print(item);
+  }
+}
+
+void main() {
+  printIterable(10); // Error runtime
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto8.png')">
+Klik Output Error
+</button>
+</div>
+
+<div class="section">
+<h2>Pembatasan Tipe dengan Class Abstract</h2>
+<p>Pada slide ini dijelaskan penggunaan generic yang dibatasi dengan class abstract. Artinya, hanya object yang merupakan turunan dari class tersebut (misalnya Animal) yang boleh digunakan.</p>
+<h3 class="judul-success">✔ Success</h3>
+<ul>
+<li>Object yang digunakan merupakan turunan dari Animal</li>
+</ul>
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+abstract class Animal {
+  void makeSound();
+}
+
+class Dog implements Animal {
+  @override
+  void makeSound() {
+    print('Woof!');
+  }
+}
+
+class Cat implements Animal {
+  @override
+  void makeSound() {
+    print('Meow!');
+  }
+}
+
+class AnimalCage<T extends Animal> {
+  T animal;
+
+  AnimalCage(this.animal);
+
+  void sound() {
+    animal.makeSound();
+  }
+}
+
+void main() {
+  var dogCage = AnimalCage<Dog>(Dog());
+  dogCage.sound();
+
+  var catCage = AnimalCage<Cat>(Cat());
+  catCage.sound();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto9.png')">
+Klik Output Succes
+</button>
+
+
+<h3 class="judul-error">❌ Error</h3>
+<ul>
+<li>Menggunakan tipe yang bukan turunan dari Animal</li>
+<li>String bukan bagian dari Animal</li>
+</ul>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+abstract class Animal {
+  void makeSound();
+}
+
+class AnimalCage<T extends Animal> {
+  T animal;
+
+  AnimalCage(this.animal);
+}
+
+void main() {
+  var stringCage = AnimalCage<String>("test");
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openImagePopup('foto10.png')">
+Klik Output Error
+</button>
+</div>
+
+
+<div class="section">
+<h2>Praktik 1 : Generic Class & Fungsi</h2>
+<p>
+<ul>
+<li>Membuat class Repository(T) dengan method: save(T item), getById(int id), getAll()</li>
+<li>Membuat fungsi generic swap(T) untuk menukar posisi data dalam list</li>
+<li>Membuat class Triple(A, B, C) untuk menyimpan tiga tipe data berbeda</li>
+</ul>
+</p>
+  <div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class Repository<T> {
+  Map<int, T> data = {};
+
+  void save(int id, T item) {
+    data[id] = item;
+  }
+
+  T? getById(int id) {
+    return data[id];
+  }
+
+  List<T> getAll() {
+    return data.values.toList();
+  }
+}
+
+void swap<T>(List<T> list, int i, int j) {
+  var temp = list[i];
+  list[i] = list[j];
+  list[j] = temp;
+}
+
+class Triple<A, B, C> {
+  A first;
+  B second;
+  C third;
+
+  Triple(this.first, this.second, this.third);
+}
+
+void main() {
+  var repo = Repository<String>();
+
+  repo.save(1, "Data 1");
+  repo.save(2, "Data 2");
+
+  print(repo.getById(1));
+  print(repo.getAll());
+
+  var list = [1, 2, 3];
+  swap(list, 0, 2);
+  print(list);
+
+  var t = Triple(1, "Hello", 3.14);
+  print("${t.first}, ${t.second}, ${t.third}");
+}
+</pre>
+</div>
+  
+<button class="btn-run" onclick="openPopup('7e773a43dcee6b88b2a4fece4a1aca87')">
+Run di DartPad
+</button>
+</div>
+
+
+<div class="section">
+<h2>Generic vs Dynamic vs Object</h2>
+<p>
+  <b>1. Generic</b> :
+  <ul>
+  <li>Dicek saat compile-time</li>
+  <li>Paling aman</li>
+  <li>Tidak perlu casting</li>
+  </ul>
+
+  <b>2. Dyanamic</b> :
+  <ul>
+  <li>Tidak dicek di awal</li>
+  <li>Sangat fleksibel</li>
+  <li>Rawan error saat runtime</li>
+  </ul>
+
+   <b>3. Object</b> :
+  <ul>
+  <li>Dicek saat compile-time</li>
+  <li>Lebih aman dari dynamic</li>
+  <li>Tetapi perlu casting untuk digunakan</li>
+  </ul>
+</p>
+
+<div class="preview-box">
+<pre>
+// Contoh perbedaan
+Box<int> box1 = Box<int>(42); // Generic: aman
+dynamic box2 = 42; // Dynamic: tidak aman
+Object box3 = 42; // Object: perlu casting
+</pre>
+</div>
+</div>
+
+
+<div class="section">
+<h2>Studi Kasus : Cache Generic</h2>
+<p>Pada slide ini ditampilkan contoh penggunaan generic dalam bentuk class Cache(T), yang digunakan untuk menyimpan data berdasarkan key dan value.
+Tipe T menunjukkan bahwa nilai (value) bisa berupa tipe apa saja sesuai kebutuhan.</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+
+class Cache<T> {
+  final Map<String, T> _storage = {};
+
+  void set(String key, T value) {
+    _storage[key] = value;
+  }
+
+  T? get(String key) {
+    return _storage[key];
+  }
+
+  void remove(String key) {
+    _storage.remove(key);
+  }
+}
+
+void main() {
+  var userCache = Cache<String>();
+  userCache.set('name', 'Putri');
+
+  var productCache = Cache<Product>();
+  productCache.set('p1', Product('Headphone', 1000));
+}
+
+class Product {
+  String name;
+  int price;
+
+  Product(this.name, this.price);
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('c2326cdf65b553e48def86684c22f707')">
+Run di DartPad
+</button>
+</div>
+
+
+<div class="section">
+<h2>Ringkasan</h2>
+<p>
+<ul>
+  <li>Generic membuat kode lebih aman (type-safe)</li>
+  <li>Generic dapat digunakan pada class, function, dan collection</li>
+  <li>Type inference mempermudah penulisan kode</li>
+  <li>Pembatasan tipe (extends) menjaga agar tipe tetap sesuai</li>
+</ul>
+</p>
+</div>
+
+
+
+<div class="section">
+<h2>Latihan</h2>
+<p>Latihan pada slide ini bertujuan untuk melatih pemahaman tentang penggunaan generic dalam pembuatan class dan function.</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+
+class Stack<T> {
+  List<T> data = [];
+
+  void push(T nilai) {
+    data.add(nilai);
+  }
+
+  T? pop() {
+    if (data.isEmpty) return null;
+    return data.removeLast();
+  }
+
+  T? peek() {
+    if (data.isEmpty) return null;
+    return data.last;
+  }
+}
+
+List<T> mergeLists<T>(List<T> a, List<T> b) {
+  List<T> hasil = [];
+  hasil.addAll(a);
+  hasil.addAll(b);
+  return hasil;
+}
+
+class Response<T> {
+  T? data;
+  String? error;
+
+  Response({this.data, this.error});
+}
+
+void main() {
+  // stack
+  var s = Stack<int>();
+  s.push(1);
+  s.push(2);
+  print(s.peek());
+  print(s.pop());
+
+  // merge list
+  var gabung = mergeLists([1, 2], [3, 4]);
+  print(gabung);
+
+  // response
+  var r = Response<String>(data: "sukses");
+  print(r.data);
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('e033fac3dcad685828900ccf3c7e6462')">
+Run di DartPad
+</button>
+</div>
+
+
+
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <span class="close" onclick="closePopup()">❌</span>
+    <iframe id="dartFrame"></iframe>
+  </div>
+</div>
+
+<div class="popup" id="imagePopup">
+  <div class="popup-box image-box">
+    <span class="close" onclick="closeImagePopup()">❌</span>
+    <img id="popupImg">
+  </div>
+</div>
+
+<script>
+function openPopup(id){
+  document.getElementById("dartFrame").src =
+  "https://dartpad.dev/embed-dart.html?id=" + id + "&run=true&split=60";
+  document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+  document.getElementById("dartFrame").src="";
+}
+
+function openImagePopup(src){
+  document.getElementById("imagePopup").style.display="flex";
+  document.getElementById("popupImg").src=src;
+}
+
+function closeImagePopup(){
+  document.getElementById("imagePopup").style.display="none";
+  document.getElementById("popupImg").src="";
+}
+</script>
+
+</body>
+</html>
