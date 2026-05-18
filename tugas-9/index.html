@@ -1,1 +1,705 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extension Methods</title>
 
+<style>
+body{
+  margin:0;
+  padding:40px;
+  background:#0f0f14;
+  font-family:Arial, sans-serif;
+  color:white;
+}
+
+h1{
+  text-align:center;
+  color:#ff4da6;
+}
+
+  .identitas{
+  text-align:center;
+  color:#ff99cc;
+  margin-bottom:30px;
+  line-height:1.8;
+}
+
+.section{
+  border:2px solid #ff4da6;
+  padding:25px;
+  margin-bottom:40px;
+  border-radius:12px;
+  background:#1a1a22;
+}
+
+.preview-box{
+  background:black;
+  padding:20px;
+  border-radius:10px;
+  margin-top:15px;
+  color:#00ff88;
+  font-family:monospace;
+  overflow-x:auto;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.btn-run{
+  background:#ff4da6;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.btn-run:hover{
+  background:#ff1a8c;
+}
+
+/* POPUP */
+.popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-box{
+  width:95%;
+  height:85vh;
+  max-width:1000px;
+  background:#1a1a22;
+  padding:20px;
+  border-radius:10px;
+  position:relative;
+  border:2px solid #ff4da6;
+}
+
+#dartFrame{
+width:100%;
+height:100%;
+border:none;
+}
+  
+.close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:22px;
+  cursor:pointer;
+  color:#ff4da6;
+}
+
+iframe{
+  width:100%;
+  height:520px;
+  border:none;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Extension Methods</h1>
+
+<div class="identitas">
+Nama: Putri Ananda Amelia <br>
+NIM: 251410029 <br>
+Kelas: SI2A
+</div>
+
+<div class="section">
+<h2>Pengantar Extension Methods</h2>
+<p>
+Extension Methods adalah fitur pada Dart yang digunakan untuk menambahkan method baru ke tipe data yang sudah ada tanpa mengubah source code aslinya. Dengan extension methods, kode menjadi lebih rapi, mudah dibaca, dan lebih natural digunakan.
+</div>
+
+<div class="section">
+<h2>Masalah Tanpa Extension Methods</h2>
+<p>
+Pada kode ini, fungsi tambahan masih dibuat menggunakan StringUtils. Cara ini membuat penulisan kode lebih panjang karena method harus dipanggil melalui class.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class StringUtils {
+  static String capitalize(String text) {
+    if (text.isEmpty) return text;
+    return text[0].toUpperCase() + text.substring(1);
+  }
+
+  static bool isEmail(String text) {
+    return text.contains('@');
+  }
+}
+
+void main() {
+  var name = 'putri';
+
+  var capitalized = StringUtils.capitalize(name);
+  var emailCheck = StringUtils.isEmail('test@mail.com');
+
+  print('Original name: $name');
+  print('Capitalized name: $capitalized');
+  print('Is "test@mail.com" an email? $emailCheck');
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('7c04ddda08b519a352cb910adf30e76e')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Solusi dengan Extension Methods</h2>
+<p>
+Extension methods membuat method bisa langsung digunakan pada object, seperti name.capitalize(), sehingga kode lebih rapi dan mudah dibaca.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+extension StringExtensions on String {
+  String capitalize() {
+    if (isEmpty) return this;
+    return this[0].toUpperCase() + substring(1);
+  }
+  
+  bool get isEmail => contains('@');
+  
+  String reverse() {
+    return split('').reversed.join();
+  }
+}
+
+void main(){
+var name = 'putri';
+var capitalized = name.capitalize();  
+var isEmail = 'test@mail.com'.isEmail; 
+var reversed = 'hello'.reverse();    
+
+print('Original name: $name');
+print('Capitalized name: $capitalized');
+print('Is "test@mail.com" an email? $isEmail');
+print('Reversed "hello": $reversed');
+  
+}
+</pre>
+</div>
+  
+<button class="btn-run" onclick="openPopup('142b4351ee06be97b3b36c40129273ff')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Sintaks Extension Methods</h2>
+<p>
+Sintaks extension digunakan untuk menambahkan method, getter, dan operator baru ke tipe data tertentu tanpa mengubah class aslinya.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+extension DateTimeExtensions on DateTime {
+  
+  String toFormattedString() {
+    return '$day/$month/$year';
+  }
+  
+  
+  bool get isToday {
+    var now = DateTime.now();
+    return year == now.year && 
+           month == now.month && 
+           day == now.day;
+  }
+  
+  
+  DateTime operator +(Duration duration) {
+    return add(duration);
+  }
+}
+
+void main() {
+  
+  print('--- toFormattedString() ---');
+  final now = DateTime.now();
+  print('Current date: ${now.toFormattedString()}');
+
+  final specificDate = DateTime(2023, 10, 26);
+  print('Specific date (2023-10-26): ${specificDate.toFormattedString()}');
+
+  print('\n--- isToday ---');
+  
+  final today = DateTime.now();
+  final tomorrow = DateTime.now().add(Duration(days: 1));
+  final yesterday = DateTime.now().subtract(Duration(days: 1));
+
+  print('Is ${today.toFormattedString()} today? ${today.isToday}');
+  print('Is ${tomorrow.toFormattedString()} today? ${tomorrow.isToday}');
+  print('Is ${yesterday.toFormattedString()} today? ${yesterday.isToday}');
+
+  print('\n--- operator + ---');
+  
+  final initialDate = DateTime(2024, 1, 15);
+  final durationToAdd = Duration(days: 10, hours: 3);
+  final futureDate = initialDate + durationToAdd;
+
+  print('Initial date: ${initialDate.toFormattedString()}');
+  print('Duration to add: ${durationToAdd.inDays} days, ${durationToAdd.inHours % 24} hours');
+  print('Future date: ${futureDate.toFormattedString()}');
+  print('Future date (full): $futureDate');
+
+  final anotherDuration = Duration(days: 2);
+  final evenFutureDate = futureDate + anotherDuration;
+  print('Future date + 2 day: ${evenFutureDate.toFormattedString()}');
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('a83cfcf5dfc49479d0984342fa27bc0e')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Tipe yang Bisa Di-extend</h2>
+<p>
+Extension methods dapat digunakan pada berbagai tipe data seperti String, int, double, List, dan custom class.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+extension IntListExtensions on List<int> {
+  int get sum => fold(0, (total, item) => total + item);
+  
+  double get average => isEmpty ? 0 : sum / length;
+}
+
+void main(){
+var numbers = [1, 2, 3, 4, 5];
+print(numbers.sum);      
+print(numbers.average);  
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('b9dd7d57fb794a9d94ba1ad72f805810')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Extension untuk Null Safety</h2>
+<p>
+Extension ini membantu menangani data null agar program lebih aman dan mengurangi error saat dijalankan.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+extension NullableStringExtensions on String? {
+  String orEmpty() => this ?? '';
+  
+  bool get isNullOrEmpty => this == null || this!.isEmpty;
+  
+  bool get isNotNullOrEmpty => !isNullOrEmpty;
+  
+  String withDefault(String defaultValue) => this ?? defaultValue;
+}
+
+void main(){
+
+String? name;
+print(name.orEmpty());           
+print(name.isNullOrEmpty);       
+print(name.isNotNullOrEmpty);    
+print(name.withDefault('Guest')); 
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('2be395ae561eca966901ffb584a000e2')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Praktik 1 : Utilities untuk Dart Types</h2>
+<p>
+Pada kode ini ditambahkan fungsi tambahan pada tipe num, seperti format Rupiah, pengecekan range angka, dan perhitungan pangkat.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+extension NumberExtensions on num {
+  
+  String toRupiah() {
+    return 'Rp${toStringAsFixed(0).replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (match) => '${match[1]}.',
+    )}';
+  }
+  
+  bool isBetween(num min, num max) {
+    return this >= min && this <= max;
+  }
+  
+  num power(int exponent) {
+    var result = this;
+    for (var i = 1; i < exponent; i++) {
+      result *= this;
+    }
+    return result;
+  }
+}
+
+void main(){
+
+var price = 1500000;
+print(price.toRupiah());  
+print(5.isBetween(1, 10)); 
+print(2.power(3));        
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('83302bfe65a18b09e56cd6f0443033b0')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Generic Extensions</h2>
+<p>
+Generic extension memungkinkan extension digunakan untuk berbagai tipe data sehingga lebih fleksibel dan dapat dipakai ulang.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+extension ListExtensions<T> on List<T> {
+  
+  T? getOrNull(int index) {
+    if (index < 0 || index >= length) return null;
+    return this[index];
+  }
+  
+  List<List<T>> chunk(int size) {
+    var chunks = <List<T>>[];
+    for (var i = 0; i < length; i += size) {
+      chunks.add(sublist(i, i + size > length ? length : i + size));
+    }
+    return chunks;
+  }
+  
+  List<T> distinct() {
+    var result = <T>[];
+    for (var item in this) {
+      if (!result.contains(item)) {
+        result.add(item);
+      }
+    }
+    return result;
+  }
+}
+
+void main(){
+
+var numbers = [1, 2, 3, 4, 5, 6, 7];
+print(numbers.chunk(3));  
+print([1, 2, 2, 3, 3, 3].distinct()); 
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('369e9206f20773cb640f8735c4c3d115')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Unnamed Extensions</h2>
+<p>
+Unnamed extension hanya bisa digunakan di dalam file yang sama dan biasanya dipakai untuk kebutuhan internal.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+extension on DateTime {
+  String get toYYYYMMDD {
+    return '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
+  }
+  
+  DateTime get startOfDay {
+    return DateTime(year, month, day);
+  }
+}
+
+void main() {
+ 
+  var today = DateTime.now();
+  print(today.toYYYYMMDD); 
+  print(today.startOfDay); 
+}
+  
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('2a9955188ed62b0da1c92cd695887f0d')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Konflik Nama Extension</h2>
+<p>
+Konflik terjadi ketika dua extension memiliki nama method yang sama sehingga Dart perlu dibantu dengan prefix atau hide.
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+ 
+// File: string_extensions.dart
+extension StringCaseExtensions on String {
+  String capitalize() => /* ... */;
+}
+
+// File: text_utils.dart  
+extension TextUtilsExtensions on String {
+  String capitalize() => /* ... berbeda ... */;
+}
+
+// Solusi: Import dengan prefix atau show/hide
+import 'string_extensions.dart' as se;
+import 'text_utils.dart' hide capitalize;
+
+void main(){
+
+var text = 'hello';
+// text.capitalize(); // ERROR: ambiguous
+se.capitalize(text); // Gunakan dengan prefix
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('7e0c21ff5caca50d8967cd6281070f58')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Extension untuk Custom Classes</h2>
+<p>
+Extension digunakan untuk menambahkan fitur baru pada class Product, seperti diskon, format harga, dan pengecekan harga mahal.
+</p>
+ 
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+class Product {
+  final String name;
+  final double price;
+  
+  Product(this.name, this.price);
+}
+
+extension DoubleRupiahFormatter on double {
+  String toRupiah() {
+   
+    final intValue = toInt();
+    
+    String numberString = intValue.toString();
+    
+    String formattedString = '';
+    int counter = 0;
+    for (int i = numberString.length - 1; i >= 0; i--) {
+      formattedString = numberString[i] + formattedString;
+      counter++;
+      if (counter % 3 == 0 && i != 0) {
+        formattedString = '.' + formattedString;
+      }
+    }
+    
+    return 'Rp$formattedString';
+  }
+}
+
+extension ProductExtensions on Product {
+  
+  Product withDiscount(double percentage) {
+    var discountedPrice = price * (1 - percentage / 100);
+    return Product(name, discountedPrice);
+  }
+  
+  String get displayInfo => '$name - ${price.toRupiah()}';
+  
+  bool get isExpensive => price > 1000000;
+}
+
+void main(){
+  
+  var laptop = Product('Handphone', 15000000);
+  var discounted = laptop.withDiscount(10);
+  print(discounted.displayInfo);  
+  print(laptop.isExpensive);      
+
+  var keyboard = Product('Ipad', 750000);
+  print(keyboard.displayInfo);
+  print(keyboard.isExpensive);
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('ad50b1e5ff3d6f4544650f1dae4c56b9')">
+Run di DartPad
+</button>
+</div>
+
+
+<div class="section">
+<h2> Praktik 2 : Validator Extensions</h2>
+<p>
+Validator extension digunakan untuk memeriksa validitas data seperti email, password, nomor telepon, dan angka agar data lebih aman digunakan.
+</p>
+
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+  
+extension StringValidators on String {
+  bool get isEmail {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(this);
+  }
+
+  bool get isPhoneNumber {
+    return RegExp(r'^[0-9]{10,13}$').hasMatch(this);
+  }
+
+  bool get isStrongPassword {
+    return length >= 8 &&
+        contains(RegExp(r'[A-Z]')) &&
+        contains(RegExp(r'[a-z]')) &&
+        contains(RegExp(r'[0-9]'));
+  }
+
+  bool get isUrl {
+    try {
+      Uri.parse(this);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+}
+
+extension IntValidators on int {
+  bool get isAdultAge => this >= 18;
+  bool get isPositive => this > 0;
+  bool get isEven => this % 2 == 0;
+  bool get isOdd => this % 2 != 0;
+}
+
+void main() {
+  
+  var email = 'test@example.com';
+  var age = 25;
+  var password = 'Pass030303';
+
+  print(email.isEmail); 
+  print(age.isAdultAge); 
+  print(password.isStrongPassword); 
+  print(10.isEven); 
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('9a3a5080f7fd251d4f6ad5afe25b11d2')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>Ringkasan & Best practice</h2>
+<p> Extension methods digunakan untuk menambahkan method baru pada tipe data tanpa mengubah class asli. Fitur ini membuat kode lebih rapi, singkat, dan mudah dibaca.
+<p>Best practices dalam penggunaan extension methods:</p>
+<ul>
+<li>Gunakan nama extension yang jelas</li>
+<li>Pisahkan extension sesuai tipe data</li>
+<li>Jangan menggunakan extension secara berlebihan</li>
+<li>Perhatikan null safety</li>
+<li>Tambahkan dokumentasi pada extension penting</li>
+</ul>
+</p>
+</div>
+
+
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <span class="close" onclick="closePopup()">❌</span>
+    <iframe id="dartFrame"></iframe>
+  </div>
+</div>
+
+<script>
+function openPopup(id){
+  document.getElementById("dartFrame").src =
+  "https://dartpad.dev/embed-dart.html?id=" + id + "&run=true&split=60";
+  document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+  document.getElementById("dartFrame").src="";
+}
+</script>
+
+</body>
+</html>
