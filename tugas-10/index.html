@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factory Constructors</title>
+
+<style>
+body{
+  margin:0;
+  padding:40px;
+  background:#0f0f14;
+  font-family:Arial, sans-serif;
+  color:white;
+}
+
+h1{
+  text-align:center;
+  color:#ff4da6;
+}
+
+  .identitas{
+  text-align:center;
+  color:#ff99cc;
+  margin-bottom:30px;
+  line-height:1.8;
+}
+
+.section{
+  border:2px solid #ff4da6;
+  padding:25px;
+  margin-bottom:40px;
+  border-radius:12px;
+  background:#1a1a22;
+}
+
+.preview-box{
+  background:black;
+  padding:20px;
+  border-radius:10px;
+  margin-top:15px;
+  color:#00ff88;
+  font-family:monospace;
+  overflow-x:auto;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.btn-run{
+  background:#ff4da6;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.btn-run:hover{
+  background:#ff1a8c;
+}
+
+/* POPUP */
+.popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-box{
+  width:95%;
+  height:85vh;
+  max-width:1000px;
+  background:#1a1a22;
+  padding:20px;
+  border-radius:10px;
+  position:relative;
+  border:2px solid #ff4da6;
+}
+
+#dartFrame{
+width:100%;
+height:100%;
+border:none;
+}
+  
+.close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:22px;
+  cursor:pointer;
+  color:#ff4da6;
+}
+
+iframe{
+  width:100%;
+  height:520px;
+  border:none;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Factory Constructors</h1>
+
+<div class="identitas">
+Nama: Putri Ananda Amelia <br>
+NIM: 251410029 <br>
+Kelas: SI2A
+</div>
+
+<div class="section">
+<h2>Latihan</h2>
+<p>
+<ul>
+<li><b>ConnectionFactory: dengan Pooling Koneksi Database</b></li>
+<p>Program ini menggunakan Factory Constructor untuk mengelola koneksi database. Jika koneksi dengan nama database yang sama sudah pernah dibuat, maka program akan menggunakan objek yang sudah ada (cache), sehingga tidak perlu membuat koneksi baru. Teknik ini disebut pooling koneksi.</p>
+</ul>
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+class ConnectionFactory {
+  static final Map<String, ConnectionFactory> _pool = {};
+
+  String database;
+
+  ConnectionFactory._internal(this.database);
+
+  factory ConnectionFactory(String database) {
+    if (_pool.containsKey(database)) {
+      return _pool[database]!;
+    }
+
+    var connection = ConnectionFactory._internal(database);
+    _pool[database] = connection;
+    return connection;
+  }
+
+  void connect() {
+    print('Terhubung ke database $database');
+  }
+}
+
+void main() {
+  var conn1 = ConnectionFactory('MySQL');
+  var conn2 = ConnectionFactory('MySQL');
+
+  conn1.connect();
+
+  print(identical(conn1, conn2));
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('5da4b572ffabadbc9897ab93dccce845')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<p>
+<ul>
+<li><b>NotificationFactory: yang Memilih Subclass Berdasarkan Platform</b></li>
+<p>Program ini menggunakan Factory Constructor untuk memilih jenis notifikasi berdasarkan platform yang digunakan. Jika pengguna memilih Android, maka objek AndroidNotification akan dibuat. Jika memilih iOS atau Web, maka akan dibuat objek yang sesuai.</p>
+</ul>
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+abstract class Notification {
+  void send();
+
+  factory Notification(String platform) {
+    switch (platform.toLowerCase()) {
+      case 'android':
+        return AndroidNotification();
+      case 'ios':
+        return IOSNotification();
+      case 'web':
+        return WebNotification();
+      default:
+        throw ArgumentError('Platform tidak ditemukan');
+    }
+  }
+}
+
+class AndroidNotification implements Notification {
+  @override
+  void send() {
+    print('Mengirim notifikasi Android');
+  }
+}
+
+class IOSNotification implements Notification {
+  @override
+  void send() {
+    print('Mengirim notifikasi iOS');
+  }
+}
+
+class WebNotification implements Notification {
+  @override
+  void send() {
+    print('Mengirim notifikasi Web');
+  }
+}
+
+void main() {
+  var notif = Notification('android');
+  notif.send();
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('2f39c32942a38ac407553d825585fee8')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<p>
+<ul>
+<li><b>ShapeFactory: dengan Cache untuk Shape yang Sama</b></li>
+<p>Program ini menerapkan Factory Constructor dan cache object. Jika pengguna meminta shape yang sama lebih dari satu kali, program akan mengembalikan objek yang sudah tersimpan di cache sehingga tidak membuat objek baru. Hal ini membuat penggunaan memori lebih efisien.</p>
+</ul>
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+abstract class Shape {
+  void draw();
+
+  static final Map<String, Shape> _cache = {};
+
+  factory Shape(String type) {
+    if (_cache.containsKey(type)) {
+      return _cache[type]!;
+    }
+
+    Shape shape;
+
+    switch (type.toLowerCase()) {
+      case 'circle':
+        shape = Circle();
+        break;
+      case 'square':
+        shape = Square();
+        break;
+      default:
+        throw ArgumentError('Shape tidak ditemukan');
+    }
+
+    _cache[type] = shape;
+
+    return shape;
+  }
+}
+
+class Circle implements Shape {
+  @override
+  void draw() {
+    print('Menggambar Lingkaran');
+  }
+}
+
+class Square implements Shape {
+  @override
+  void draw() {
+    print('Menggambar Persegi');
+  }
+}
+
+void main() {
+  var shape1 = Shape('circle');
+  var shape2 = Shape('circle');
+
+  shape1.draw();
+
+  print(identical(shape1, shape2));
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('0fe656c4b4fdd5570d70dc6e117f2b1d')">
+Run di DartPad
+</button>
+</div>
+
+<div class="section">
+<p>
+<h2>Challenge: AnimalFactory</h2>
+<p>Program ini menggunakan Factory Constructor untuk membuat berbagai jenis hewan berdasarkan input pengguna. Program juga menerapkan validasi untuk memastikan nama hewan tidak kosong, cache untuk menyimpan objek yang sudah dibuat, dan subclass selection untuk memilih kelas hewan yang sesuai seperti Cat, Dog, atau Bird.</p>
+</ul>
+</p>
+  
+<div class="preview-box">
+<pre>
+// Nama  : Putri Ananda Amelia
+// NIM   : 251410029
+// Kelas : SI2A
+
+abstract class Animal {
+  String name;
+
+  Animal(this.name);
+
+  void sound();
+}
+
+class Cat extends Animal {
+  Cat(String name) : super(name);
+
+  @override
+  void sound() {
+    print('$name : Meong');
+  }
+}
+
+class Dog extends Animal {
+  Dog(String name) : super(name);
+
+  @override
+  void sound() {
+    print('$name : Guk Guk');
+  }
+}
+
+class Bird extends Animal {
+  Bird(String name) : super(name);
+
+  @override
+  void sound() {
+    print('$name : Cuit Cuit');
+  }
+}
+
+class AnimalFactory {
+  static final Map<String, Animal> cache = {};
+
+  static Animal createAnimal(String type, String name) {
+    if (name.isEmpty) {
+      throw Exception('Nama hewan tidak boleh kosong');
+    }
+
+    String key = '$type-$name';
+
+    if (cache.containsKey(key)) {
+      return cache[key]!;
+    }
+
+    Animal animal;
+
+    if (type.toLowerCase() == 'cat') {
+      animal = Cat(name);
+    } else if (type.toLowerCase() == 'dog') {
+      animal = Dog(name);
+    } else if (type.toLowerCase() == 'bird') {
+      animal = Bird(name);
+    } else {
+      throw Exception('Jenis hewan tidak tersedia');
+    }
+
+    cache[key] = animal;
+    return animal;
+  }
+}
+
+void main() {
+  Animal animal1 = AnimalFactory.createAnimal('cat', 'Milo');
+  Animal animal2 = AnimalFactory.createAnimal('cat', 'Milo');
+
+  animal1.sound();
+
+  print(identical(animal1, animal2));
+}
+</pre>
+</div>
+
+<button class="btn-run" onclick="openPopup('c1599b566d62fa8d3b75f81d9474ca13')">
+Run di DartPad
+</button>
+</div>
+
+
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <span class="close" onclick="closePopup()">❌</span>
+    <iframe id="dartFrame"></iframe>
+  </div>
+</div>
+
+<script>
+function openPopup(id){
+  document.getElementById("dartFrame").src =
+  "https://dartpad.dev/embed-dart.html?id=" + id + "&run=true&split=60";
+  document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+  document.getElementById("dartFrame").src="";
+}
+</script>
+
+</body>
+</html>
