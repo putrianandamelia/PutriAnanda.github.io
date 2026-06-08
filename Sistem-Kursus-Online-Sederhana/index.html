@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistem Kursus Online</title>
+</head>
+
+<body style="
+    margin:0;
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:#f5f1ea;
+    display:flex;
+">
+
+<!-- SIDEBAR -->
+<div style="
+    width:250px;
+    background:linear-gradient(180deg,#5a3e2b,#3e2a1f);
+    color:white;
+    height:100vh;
+    padding:25px;
+">
+
+    <h2 style="margin:0; font-size:20px;">📚 Kursus App</h2>
+    <p style="font-size:12px; opacity:0.8;">Sistem Kursus Online</p>
+
+    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.2);">
+
+    <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px; font-size:14px;">
+
+        <div onclick="showPage('dashboard')" style="padding:10px; border-radius:10px; cursor:pointer; background:rgba(255,255,255,0.1);">
+            🏠 Dashboard
+        </div>
+
+        <div onclick="showPage('siswa')" style="padding:10px; border-radius:10px; cursor:pointer; background:rgba(255,255,255,0.1);">
+            👩‍🎓 Siswa
+        </div>
+
+        <div onclick="showPage('instruktur')" style="padding:10px; border-radius:10px; cursor:pointer; background:rgba(255,255,255,0.1);">
+            👨‍🏫 Instruktur
+        </div>
+
+        <div onclick="showPage('kursus')" style="padding:10px; border-radius:10px; cursor:pointer; background:rgba(255,255,255,0.1);">
+            📖 Kursus
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CONTENT -->
+<div style="flex:1; padding:30px;">
+
+    <!-- DASHBOARD -->
+    <div id="dashboard">
+
+        <h1 style="color:#3e2a1f; margin-bottom:5px;">Dashboard</h1>
+        <p style="color:#7a6a5a; margin-top:0;">Selamat datang di Sistem Kursus Online Sederhana</p>
+
+        <!-- INFO CARD -->
+        <div style="
+            background:white;
+            padding:15px;
+            border-radius:12px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom:20px;
+            font-size:14px;
+        ">
+            <b style="color:#5a3e2b;">Dibuat oleh:</b><br><br>
+            Putri Ananda Amelia (251410029)<br>
+            Marsya Dwi Lintang (251410028)
+        </div>
+
+        <!-- CARD -->
+        <div style="display:flex; gap:15px;">
+
+            <div style="flex:1; background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                <h3 style="color:#8b5e3c; margin-bottom:5px;">👩‍🎓 Siswa</h3>
+                <h1 style="margin:0; color:#3e2a1f;">3</h1>
+                <p style="margin-top:5px; color:#7a6a5a;">Total siswa terdaftar</p>
+            </div>
+
+            <div style="flex:1; background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                <h3 style="color:#8b5e3c; margin-bottom:5px;">👨‍🏫 Instruktur</h3>
+                <h1 style="margin:0; color:#3e2a1f;">2</h1>
+                <p style="margin-top:5px; color:#7a6a5a;">Total pengajar aktif</p>
+            </div>
+
+            <div style="flex:1; background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                <h3 style="color:#8b5e3c; margin-bottom:5px;">📖 Kursus</h3>
+                <h1 style="margin:0; color:#3e2a1f;">3</h1>
+                <p style="margin-top:5px; color:#7a6a5a;">Kelas tersedia</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SISWA -->
+    <div id="siswa" style="display:none;">
+        <h1 style="color:#3e2a1f;">Data Siswa</h1>
+
+        <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05); font-size:14px;">
+            <p>👩 Putri Ananda</p>
+            <p>👩 Marsya Dwi</p>
+            <p>👨 Alvin Saputra</p>
+        </div>
+    </div>
+
+    <!-- INSTRUKTUR -->
+    <div id="instruktur" style="display:none;">
+        <h1 style="color:#3e2a1f;">Data Instruktur</h1>
+
+        <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05); font-size:14px;">
+            <p>👨 Antonio - Web Development</p>
+            <p>👩 Elisa Ana - UI/UX Design</p>
+        </div>
+    </div>
+
+    <!-- KURSUS -->
+    <div id="kursus" style="display:none;">
+        <h1 style="color:#3e2a1f;">Data Kursus</h1>
+
+        <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05); font-size:14px;">
+            <p>📘 HTML Dasar</p>
+            <p>📗 OOP Programming</p>
+            <p>📙 Basis Data</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function showPage(page) {
+    let pages = ["dashboard","siswa","instruktur","kursus"];
+
+    pages.forEach(p => {
+        document.getElementById(p).style.display = "none";
+    });
+
+    document.getElementById(page).style.display = "block";
+}
+</script>
+
+</body>
+</html>
